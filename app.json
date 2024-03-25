@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "SkinBuddy",
+    "slug": "SkinBuddy",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
