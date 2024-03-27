@@ -14,6 +14,10 @@
 		96905EF65AED1B983A6B3ABC /* libPods-SkinBuddy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-SkinBuddy.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		A033915080EE453E8FC7F348 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F8AA6C4D34EEBB5F11B92 /* NanumSquareRoundB.ttf */; };
+		A4BE05FF11FB4283AAC18EC0 /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6165A5D8D40487998E83D75 /* NanumSquareRoundEB.ttf */; };
+		F57B0C426F4F423AB2FE7F61 /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A1528201254755A31F88A7 /* NanumSquareRoundL.ttf */; };
+		299FD7A34B054762A41BB90A /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3CE2017C97348FFB1AE8C4E /* NanumSquareRoundR.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,10 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SkinBuddy/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		651F8AA6C4D34EEBB5F11B92 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundB.ttf"; path = "../src/assets/fonts/NanumSquareRoundB.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F6165A5D8D40487998E83D75 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundEB.ttf"; path = "../src/assets/fonts/NanumSquareRoundEB.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		14A1528201254755A31F88A7 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundL.ttf"; path = "../src/assets/fonts/NanumSquareRoundL.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A3CE2017C97348FFB1AE8C4E /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundR.ttf"; path = "../src/assets/fonts/NanumSquareRoundR.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				879755EAE4CD4A5B882731A2 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -130,6 +139,18 @@
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
+		};
+		879755EAE4CD4A5B882731A2 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				651F8AA6C4D34EEBB5F11B92 /* NanumSquareRoundB.ttf */,
+				F6165A5D8D40487998E83D75 /* NanumSquareRoundEB.ttf */,
+				14A1528201254755A31F88A7 /* NanumSquareRoundL.ttf */,
+				A3CE2017C97348FFB1AE8C4E /* NanumSquareRoundR.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -195,6 +216,10 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				A033915080EE453E8FC7F348 /* NanumSquareRoundB.ttf in Resources */,
+				A4BE05FF11FB4283AAC18EC0 /* NanumSquareRoundEB.ttf in Resources */,
+				F57B0C426F4F423AB2FE7F61 /* NanumSquareRoundL.ttf in Resources */,
+				299FD7A34B054762A41BB90A /* NanumSquareRoundR.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
