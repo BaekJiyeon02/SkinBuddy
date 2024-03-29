@@ -6,7 +6,8 @@ export const colors = {
   textGrey: '#626262',
   highlightBlue : "#9ABBF3",
   highlightRed : "#FFA4A4",
-  activeText: "#000000"
+  activeText: "#000000",
+  softGrey : "#F8F8F8",
 };
 
 

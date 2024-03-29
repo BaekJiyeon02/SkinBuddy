@@ -7,14 +7,36 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
 import { BorderlessButton } from 'react-native-gesture-handler';
 
-import AcneAnalysisScreen from './src/screen/AcneAnalysisScreen';
-import ImprovementAnalysisScreen from './src/screen/ImprovementAnalysisScreen';
+import AcneAnalysisScreen from './src/screen/AcneAnalysis/AcneAnalysisScreen';
+import AcneAnalysisResultScreen from './src/screen/AcneAnalysis/AcneAnalysisResultScreen';
+
+import ImprovementAnalysisScreen from './src/screen/ImprovementAnalysis/ImprovementAnalysisScreen';
+import ImprovementAnalysisResultScreen from './src/screen/ImprovementAnalysis/ImprovementAnalysisResultScreen';
+
+import MbtiTestScreen from './src/screen/MbtiTest/MbtiTestScreen';
+import MbtiTestResultScreen from './src/screen/MbtiTest/MbtiTestResultScreen';
+
+import HistoryScreen from './src/screen/History/HistoryScreen';
+import HistoryDetailScreen from './src/screen/History/HistoryDetailScreen';
+
+import CameraScreen from './src/screen/Photo/CameraScreen';
+import AlbumScreen from './src/screen/Photo/AlbumScreen';
+
+import SettingScreen from './src/screen/Setting/SettingScreen';
+import ChangePasswordScreen from './src/screen/Setting/ChangePasswordScreen';
+import NoticeScreen from './src/screen/Setting/NoticeScreen';
+import ProfileEditScreen from './src/screen/Setting/ProfileEditScreen';
+import QandAListScreen from './src/screen/Setting/QandAListScreen';
+import QandAWriteScreen from './src/screen/Setting/QandAWriteScreen';
+
 import MainScreen from './src/screen/MainScreen';
-import MbtiTestScreen from './src/screen/MbtiTestScreen';
-import HistoryScreen from './src/screen/HistoryScreen';
-import CameraScreen from './src/screen/CameraScreen';
+
+
+
+import { colors, width, height } from './src/assets/globalStyles'; //width,height 받아오기
 
 const Tab = createBottomTabNavigator();
+
 
 const imagePaths = {
   icon1: require('./src/assets/img/home.png'),
@@ -54,10 +76,10 @@ const TabNavigator = () => (
             );
           },
           tabBarShowLabel: true, // 텍스트 숨기기
-          tabBarActiveTintColor: 'black', // 활성 탭의 텍스트 색상
-          tabBarInactiveTintColor: '#626262', // 비활성 탭의 텍스트 색상
-          tabBarStyle: { backgroundColor: '#F2F2F2', height: 60, paddingBottom: 0, paddingRight: 10, paddingLeft: 10 }, // tabBar의 배경색, 크기 조절
-          tabBarLabelStyle: { fontWeight: 'bold', fontFamily: "NanumSquareRoundB", fontSize: 12 }
+          tabBarActiveTintColor: colors.activeText, // 활성 탭의 텍스트 색상
+          tabBarInactiveTintColor: '#6A6A6A', // 비활성 탭의 텍스트 색상
+          tabBarStyle: { backgroundColor: '#F2F2F2', height: height * 60, paddingBottom: 0, paddingRight: width * 10, paddingLeft: 10 }, // tabBar의 배경색, 크기 조절
+          tabBarLabelStyle: { fontWeight: 'bold', fontFamily: "NanumSquareRoundB", fontSize: width* 12 }
         })}
       >
           <Tab.Screen name="홈" component={MainScreen} />
@@ -72,11 +94,25 @@ const TabNavigator = () => (
 
 const Stack = createStackNavigator();
 
-function HeaderLogo(){
+// 이전 스크린으로 돌아가는 함수
+const goBack = () => {
+  navigation.goBack();
+};
+
+const HeaderLogo=()=>{
   return (
-    <Image style={{width:75, height:75}} source={require('./src/assets/img/SkinBuddy_logo.png')}/>
+    <Image style={{width:width * 87, height:height * 87, marginBottom:height* 20}} source={require('./src/assets/img/SkinBuddy_logo.png')}/>
   )
 }
+const HeaderBackButton = () => {
+  return (
+    <Image
+      source={require("./src/assets/img/backToPage.png")}
+      style={{ width: 24, height: 24, margin:10 }}
+      onPress={goBack}
+    />
+  );
+};
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -89,7 +125,11 @@ function App() {
       <Stack.Navigator>
 
         <Stack.Screen name="Stack" component={TabNavigator}
-        options={{ headerTitle: (props) => <HeaderLogo {...props} /> }} />
+        options={{headerTitle: (props) => <HeaderLogo {...props} />,
+        headerStatusBarHeight:height*80,
+        headerShadowVisible: false, // 헤더의 선 없애기
+        headerLeft: () => <HeaderBackButton />, // 헤더 왼쪽에 뒤로가기 추가
+       }} />
         <Stack.Group>
           <Stack.Screen name="홈" component={MainScreen} />
         </Stack.Group>
@@ -97,6 +137,7 @@ function App() {
         <Stack.Group>
           <Stack.Screen name="Ai 트러블 분석" component={AcneAnalysisScreen} />
           <Stack.Screen name="카메라" component={CameraScreen} />
+          <Stack.Screen name="앨범" component={AlbumScreen} />
         </Stack.Group>
 
         <Stack.Group>
@@ -109,6 +150,8 @@ function App() {
 
         <Stack.Group>
           <Stack.Screen name="과거 진단 기록" component={HistoryScreen} />
+          <Stack.Screen name="과거 진단 기록 상세 페이지" component={HistoryScreen} />
+          
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -118,8 +161,8 @@ function App() {
 const styles = StyleSheet.create({
 
   image: {
-    width: 30,
-    height: 30,
+    width: width * 30,
+    height: height * 30,
   },
 
 });
