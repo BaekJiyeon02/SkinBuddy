@@ -7,29 +7,29 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
 import { BorderlessButton } from 'react-native-gesture-handler';
 
-import AcneAnalysisScreen from './src/screen/AcneAnalysis/AcneAnalysisScreen';
-import AcneAnalysisResultScreen from './src/screen/AcneAnalysis/AcneAnalysisResultScreen';
+import AcneAnalysisScreen from './src/screens/AcneAnalysis/AcneAnalysisScreen';
+import AcneAnalysisResultScreen from './src/screens/AcneAnalysis/AcneAnalysisResultScreen';
 
-import ImprovementAnalysisScreen from './src/screen/ImprovementAnalysis/ImprovementAnalysisScreen';
-import ImprovementAnalysisResultScreen from './src/screen/ImprovementAnalysis/ImprovementAnalysisResultScreen';
+import ImprovementAnalysisScreen from './src/screens/ImprovementAnalysis/ImprovementAnalysisScreen';
+import ImprovementAnalysisResultScreen from './src/screens/ImprovementAnalysis/ImprovementAnalysisResultScreen';
 
-import MbtiTestScreen from './src/screen/MbtiTest/MbtiTestScreen';
-import MbtiTestResultScreen from './src/screen/MbtiTest/MbtiTestResultScreen';
+import MbtiTestScreen from './src/screens/MbtiTest/MbtiTestScreen';
+import MbtiTestResultScreen from './src/screens/MbtiTest/MbtiTestResultScreen';
 
-import HistoryScreen from './src/screen/History/HistoryScreen';
-import HistoryDetailScreen from './src/screen/History/HistoryDetailScreen';
+import HistoryScreen from './src/screens/History/HistoryScreen';
+import HistoryDetailScreen from './src/screens/History/HistoryDetailScreen';
 
-import CameraScreen from './src/screen/Photo/CameraScreen';
-import AlbumScreen from './src/screen/Photo/AlbumScreen';
+import CameraScreen from './src/screens/Photo/CameraScreen';
+import AlbumScreen from './src/screens/Photo/AlbumScreen';
 
-import SettingScreen from './src/screen/Setting/SettingScreen';
-import ChangePasswordScreen from './src/screen/Setting/ChangePasswordScreen';
-import NoticeScreen from './src/screen/Setting/NoticeScreen';
-import ProfileEditScreen from './src/screen/Setting/ProfileEditScreen';
-import QandAListScreen from './src/screen/Setting/QandAListScreen';
-import QandAWriteScreen from './src/screen/Setting/QandAWriteScreen';
+import SettingScreen from './src/screens/Setting/SettingScreen';
+import ChangePasswordScreen from './src/screens/Setting/ChangePasswordScreen';
+import NoticeScreen from './src/screens/Setting/NoticeScreen';
+import ProfileEditScreen from './src/screens/Setting/ProfileEditScreen';
+import QandAListScreen from './src/screens/Setting/QandAListScreen';
+import QandAWriteScreen from './src/screens/Setting/QandAWriteScreen';
 
-import MainScreen from './src/screen/MainScreen';
+import MainScreen from './src/screens/MainScreen';
 
 
 
