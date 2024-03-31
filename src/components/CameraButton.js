@@ -6,7 +6,6 @@ export default function CameraButton({ title, onPress, icon, color,size }){
     if(size==undefined){
         size=28
     }
-    console.log(color)
     return(
         <TouchableOpacity onPress={onPress} style={styles.button}>
             <Entypo name={icon} size={size} color={color ? color : '#f1f1f1'} />
