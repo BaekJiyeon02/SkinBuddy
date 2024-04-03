@@ -8,6 +8,7 @@ export const colors = {
   highlightRed : "#FFA4A4",
   activeText: "#000000",
   softGrey : "#F8F8F8",
+
 };
 
 
@@ -27,7 +28,7 @@ Dimensions.get('screen').width *
 ).toFixed(2);
 
 
-export const styles = {
+export const styleG = {
 
 
   titleText:{

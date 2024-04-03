@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { colors, width, height, styles } from '../../assets/globalStyles'; //width,height 받아오기
+import { colors, width, height, styleG } from '../../assets/globalStyles'; //width,height 받아오기
 import BasicButton from '../../components/BasicButton'
 
 
@@ -32,18 +32,18 @@ export default function App() {
   }
 
   return (
-    <View style={styleSheet.container}>
-      <View style={styleSheet.titleArea}>
-        <Text style={styles.titleText}>Ai 트러블 유형 </Text>
+    <View style={styles.container}>
+      <View style={styles.titleArea}>
+        <Text style={styleG.titleText}>Ai 트러블 유형 </Text>
       </View>
-      <View style={styleSheet.subseperatorArea}>
-        <View style={styleSheet.subseperator}>
+      <View style={styles.subseperatorArea}>
+        <View style={styles.subseperator}>
       </View>
       </View>
-      <View style={styleSheet.ContentsArea}>
+      <View style={styles.ContentsArea}>
 
       </View>
-      <View style={styleSheet.ButtonArea}>
+      <View style={styles.ButtonArea}>
         <BasicButton color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'}/>
         <BasicButton color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'}/>
       </View>
@@ -51,7 +51,7 @@ export default function App() {
   );
 }
 
-const styleSheet = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'columm',
