@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   graph:{
-
     width: width * 200,
     justifyContent:'center',
   },
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     color:'white',
   },
   adBanner :{
-    height: height * 400,
+    height: height * 370,
   }
 
 });
