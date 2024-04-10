@@ -79,14 +79,14 @@ const TabNavigator = () => (
           tabBarActiveTintColor: colors.activeText, // 활성 탭의 텍스트 색상
           tabBarInactiveTintColor: '#6A6A6A', // 비활성 탭의 텍스트 색상
           tabBarStyle: { backgroundColor: '#F2F2F2', height: height * 60, paddingBottom: 0, paddingRight: width * 10, paddingLeft: 10 }, // tabBar의 배경색, 크기 조절
-          tabBarLabelStyle: { fontWeight: 'bold', fontFamily: "NanumSquareRoundB", fontSize: width* 12 }
+          tabBarLabelStyle: { fontWeight: 'bold', fontFamily: "NanumSquareRoundB", fontSize: width * 12 }
         })}
       >
-          <Tab.Screen name="홈" component={MainScreen} />
-          <Tab.Screen name="Ai 트러블 분석" component={AcneAnalysisScreen} />
-          <Tab.Screen name="Ai 호전도 분석" component={ImprovementAnalysisScreen} />
-          <Tab.Screen name="피부 MBTI" component={MbtiTestScreen} />
-          <Tab.Screen name="과거 진단 기록" component={HistoryScreen} />
+        <Tab.Screen name="홈" component={MainScreen} />
+        <Tab.Screen name="Ai 트러블 분석" component={AcneAnalysisScreen} />
+        <Tab.Screen name="Ai 호전도 분석" component={ImprovementAnalysisScreen} />
+        <Tab.Screen name="피부 MBTI" component={MbtiTestScreen} />
+        <Tab.Screen name="과거 진단 기록" component={HistoryScreen} />
       </Tab.Navigator>
     </SafeAreaView>
   </SafeAreaProvider>
@@ -99,24 +99,28 @@ const goBack = () => {
   navigation.goBack();
 };
 
-const HeaderLogo=()=>{
+const HeaderLogo = () => {
   return (
-    <Image style={{width:width * 87, height:height * 87, marginBottom:height* 20}} source={require('./src/assets/img/SkinBuddy_logo.png')}/>
+    <Image style={{ width: width * 87, height: height * 87, marginBottom: height * 20 }} source={require('./src/assets/img/SkinBuddy_logo.png')} />
   )
 }
 const HeaderBackButton = () => {
   return (
     <Image
       source={require("./src/assets/img/backToPage.png")}
-      style={{ width: 24, height: 24, margin:10 }}
+      style={{ width: 24, height: 24, margin: 10 }}
       onPress={goBack}
     />
   );
 };
 
 function App() {
+
+  // 사용 할 폰트 로드
   const [fontsLoaded] = useFonts({
-    NanumSquareRoundB: require("./src/assets/fonts/NanumSquareRoundEB.ttf"),
+    'NanumSquareRoundB': require("./src/assets/fonts/NanumSquareRoundEB.ttf"),
+    'NanumSquareRoundL': require('./src/assets/fonts/NanumSquareRoundL.ttf'),
+    'NanumSquareRoundR': require('./src/assets/fonts/NanumSquareRoundR.ttf'),
   });
   if (!fontsLoaded) return null;
   return (
@@ -125,11 +129,12 @@ function App() {
       <Stack.Navigator>
 
         <Stack.Screen name="Stack" component={TabNavigator}
-        options={{headerTitle: (props) => <HeaderLogo {...props} />,
-        headerStatusBarHeight:height*80,
-        headerShadowVisible: false, // 헤더의 선 없애기
-        headerLeft: () => <HeaderBackButton />, // 헤더 왼쪽에 뒤로가기 추가
-       }} />
+          options={{
+            headerTitle: (props) => <HeaderLogo {...props} />,
+            headerStatusBarHeight: height * 80,
+            headerShadowVisible: false, // 헤더의 선 없애기
+            // headerLeft: () => <HeaderBackButton />, // 헤더 왼쪽에 뒤로가기 추가
+          }} />
         <Stack.Group>
           <Stack.Screen name="홈" component={MainScreen} />
         </Stack.Group>
@@ -151,7 +156,7 @@ function App() {
         <Stack.Group>
           <Stack.Screen name="과거 진단 기록" component={HistoryScreen} />
           <Stack.Screen name="과거 진단 기록 상세 페이지" component={HistoryScreen} />
-          
+
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

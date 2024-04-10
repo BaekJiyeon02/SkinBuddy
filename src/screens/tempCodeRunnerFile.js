@@ -16,27 +16,28 @@ export default function App() {
 
     <View style={styles.container}>
       <View style={styles.adBanner}>
-        <AdBanner />
+
+        <AdBanner></AdBanner>
+
       </View>
-      <View style={styles.bottom}>
-        <View style={styles.userNameArea}>
-          {/* 유저 이름 받아 올시 해제
+
+      <View style={styles.userNameArea}>
+        {/* 유저 이름 받아 올시 해제
         <Text>{userName}</Text> */}
-          <Text style={[styleG.textStyle, { fontSize: width * 23, color: colors.textGrey, fontFamily: 'NanumSquareRoundB', fontWeight: '100' }]}><Text style={[styleG.textBold, { fontSize: width * 30 }]}>박정재</Text>님의 피부 MBTI</Text>
+        <Text style={[styleG.textStyle, { fontSize: width * 23, fontWeight: '500' }]}><Text style={{ fontSize: width * 30, fontWeight: 'bold' }}>박정재</Text>님의 피부 MBTI</Text>
+      </View>
+      {/* MBTI 결과 그래프 */}
+      <View style={styles.mbtiResult}>
+        <View style={styles.mbti}>
+          <TouchableOpacity style={[styles.mbtiBlock, { backgroundColor: backColor }]}>
+            <Text style={styles.mbtiText}>{userMbti}</Text>
+          </TouchableOpacity>
         </View>
-        {/* MBTI 결과 그래프 */}
-        <View style={styles.mbtiResult}>
-          <View style={styles.mbti}>
-            <TouchableOpacity style={[styles.mbtiBlock, { backgroundColor: backColor }]}>
-              <Text style={styles.mbtiText}>{userMbti}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.graph}>
-            <MbtiGraph category={'DO'} score={130}></MbtiGraph>
-            <MbtiGraph category={'RS'} score={130}></MbtiGraph>
-            <MbtiGraph category={'PN'} score={130}></MbtiGraph>
-            <MbtiGraph category={'WT'} score={130}></MbtiGraph>
-          </View>
+        <View style={styles.graph}>
+          <MbtiGraph category={'DO'} score={130}></MbtiGraph>
+          <MbtiGraph category={'RS'} score={130}></MbtiGraph>
+          <MbtiGraph category={'PN'} score={130}></MbtiGraph>
+          <MbtiGraph category={'WT'} score={130}></MbtiGraph>
         </View>
       </View>
     </View>
@@ -57,7 +58,6 @@ const styles = StyleSheet.create({
     borderColor: colors.darkGrey,
     borderWidth: 3,
     borderRadius: 15,
-
   },
   mbti: {
     width: width * 180,
@@ -81,15 +81,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   adBanner: {
-    height: height * 350,
+    height: height * 370,
   },
   userNameArea: {
     height: 40,
     width: 400,
     paddingLeft: 10,
-  },
-  bottom:{
-
   }
 
 });

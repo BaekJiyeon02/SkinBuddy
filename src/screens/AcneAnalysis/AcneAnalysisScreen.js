@@ -40,19 +40,19 @@ export default function App() {
         <View style={styles.subseperator}>
         </View>
         <View style={styles.commentArea}>
-          <Text style={[styles.textStyle, { fontSize: width * 25 }]}>
-            얼굴에 <Text style={{ fontWeight: 'bold' }}>트러블</Text>이 생겼나요?
+          <Text style={[styleG.textStyle, { fontSize: width * 25 }]}>
+            얼굴에 <Text style={styleG.textBold}>트러블</Text>이 생겼나요?
           </Text>
-          <Text style={[styles.textStyle, { fontSize: width * 20 }]}>
+          <Text style={[styleG.textStyle, { fontSize: width * 19 }]}>
             {'\n'}
             여드름은 잘못 방치하거나 압출하면{'\n'}
             염증이 심해지고 흉터가 남기도 합니다.{'\n'}
             이를 해결하기 위해선 올바른 관리가 중요한데요.{'\n'}
             {'\n'}
-            여드름도  <Text style={{ fontWeight: 'bold' }}>종류가 다양</Text>하고 각각마다  <Text style={{ fontWeight: 'bold' }}>관리법이{'\n'}
+            여드름도  <Text style={styleG.textBold}>종류가 다양</Text>하고 각각마다 <Text style={styleG.textBold}>관리법이{'\n'}
             다르다</Text>는 사실 알고 계셨나요?
             {'\n'}{'\n'}
-            저희가 <Text style={{ fontWeight: 'bold' }}>피부 진단 AI</Text>를 통해 어떤 유형의 여드름인지{'\n'}
+            저희가 <Text style={styleG.textBold}>피부 진단 AI</Text>를 통해 어떤 유형의 여드름인지{'\n'}
             확인하고 적절한 대처법을 알려드립니다.{'\n'}
             편하고 빠르게 진단 후 관리법을 처방받아 보세요!
           </Text>
@@ -100,9 +100,6 @@ const styles = StyleSheet.create({
     width: width * 400,
     height: 1,
   },
-  textStyle: {
-    fontFamily: "NanumSquareRoundL",
-    color: styleG.textGrey,
-  }
+
 
 });

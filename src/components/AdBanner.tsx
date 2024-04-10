@@ -53,17 +53,20 @@ export default function adBanner({ title, onPress, color, size }) {
 
 const styles = StyleSheet.create({
     container:{
+        backgroundColor:'red',
+        height:320 ,
+
 
     },
     sliderImage:{
-
-        width: 450,
-        height:300,
+        width: 430,
+        height:250 ,
         resizeMode:'cover',
-        marginVertical:20,
+        marginVertical:50,
 
     },
     footerText:{
+        color:'white',
 
     },
     footer:{
