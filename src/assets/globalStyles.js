@@ -30,8 +30,6 @@ export const colors = {
   ORNW: '#83C15C',
   OSPW: '#F6976E',
   OSNW: '#FFE3A4',
-
-
 };
 
 
@@ -57,7 +55,6 @@ export const styleG = {
   titleText: {
     color: colors.textGrey,
     fontFamily: "NanumSquareRoundB",
-    fontWeight: 'bold',
     fontSize: width * 30,
     margin: width * 20,
   },
@@ -67,7 +64,6 @@ export const styleG = {
   },
   textBold: {
     fontFamily: 'NanumSquareRoundB',
-    fontWeight: 'bold'
   }
 
 }

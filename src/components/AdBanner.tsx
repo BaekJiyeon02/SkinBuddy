@@ -23,7 +23,10 @@ export default function adBanner({ title, onPress, color, size }) {
         return <TouchableOpacity onPress={()=>console.log('clicked')}>
 
         <Image source={{uri:item.url}} style={styles.sliderImage}/>
-        {/* <View style={styles.footer}>
+
+        {/*
+        footer 필요한 경우 사용
+         <View style={styles.footer}>
             <Text style={styles.footerText}>{item.title}</Text>
             <Text style={styles.footerText}>{item.promo}</Text>
         </View> */}
@@ -53,7 +56,6 @@ export default function adBanner({ title, onPress, color, size }) {
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'red',
         height:320 ,
 
 
