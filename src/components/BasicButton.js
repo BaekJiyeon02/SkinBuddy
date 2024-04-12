@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Entypo } from '@expo/vector-icons'
 import { colors, width, height, styles } from '../assets/globalStyles'; //width,height 받아오기
 
 export default function BasicButton({ title, onPress, color, size }) {
