@@ -2,11 +2,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { colors, width, height, styleG } from '../../assets/globalStyles'; //width,height 받아오기
+import { colors, width, height, styleG } from '../../assets/globalStyles';
 import BasicButton from '../../components/BasicButton'
+import Subseperator from '../../components/Subseperator'
 
 
-export default function App() {
+export default function AcneAnalysisScreen() {
 
   useFocusEffect( //탭 활성화 인식
     React.useCallback(() => {
@@ -36,9 +37,8 @@ export default function App() {
       <View style={styles.titleArea}>
         <Text style={styleG.titleText}>Ai 트러블 유형 </Text>
       </View>
-      <View style={styles.subseperatorArea}>
-        <View style={styles.subseperator}>
-        </View>
+      <View style={styles.contentsArea}>
+        <Subseperator/>
         <View style={styles.commentArea}>
           <Text style={[styleG.textStyle, { fontSize: width * 25 }]}>
             얼굴에 <Text style={styleG.textBold}>트러블</Text>이 생겼나요?
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     height: height * 500,
     width: width * 400,
     marginTop: height * 20,
-    // backgroundColor: 'red',
   },
   ButtonArea: {
     flexDirection: 'row',
@@ -103,15 +102,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: height * 100,
   },
-  subseperatorArea: {
+  contentsArea: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  subseperator: {
-    backgroundColor: 'grey',
-    width: width * 400,
-    height: 1,
-  },
-
-
 });
