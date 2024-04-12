@@ -21,6 +21,7 @@ export const colors = {
   DSPT: '#C469AA',
   DSNT: '#F39AC1',
   DRPW: '#4D7FB9',
+  DRNW: '#B3A8D2',
   DSPW: '#B3A8D2',
   DSNW: '#F3B5A8',
   ORPT: '#B5D335',
@@ -28,6 +29,7 @@ export const colors = {
   OSPT: '#F6976E',
   OSNT: '#FDD6B8',
   ORNW: '#83C15C',
+  ORPW: '#83C15C',
   OSPW: '#F6976E',
   OSNW: '#FFE3A4',
 };
