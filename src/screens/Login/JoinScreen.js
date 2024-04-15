@@ -1,0 +1,188 @@
+
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import InputTextBox from '../../components/InputTextBox';
+import { styleG, colors, width, height } from '../../assets/globalStyles'
+import BackButton from '../../components/BackButton';
+import BasicButton from '../../components/BasicButton';
+import { TouchableOpacity, } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+export default function JoinScreen() {
+  const navigation = useNavigation();
+
+  // 입력 필드의 값을 추적하기 위해 useState 훅을 사용.
+  const [inputId, setInputId] = useState('');
+  const [inputPw, setInputPw] = useState('');
+  const [inputPwCheck, setInputPwCheck] = useState('');
+  const [inputNickname, setInputNickname] = useState('');
+  const [inputTel, setInputTel] = useState('');
+  
+  const [ableId, setAbleId] = useState(false);
+  
+  const [idTextColor, setIdTextColor] = useState(colors.textGray);
+  const [pwTextColor, setPwTextColor] = useState(colors.textGray);
+  const [pwCheckTextColor, setPwCheckTextColor] = useState(colors.textGray);
+  const [nicknameTextColor, setNicknameTextColor] = useState(colors.textGray);
+  const [telTextColor, setTelTextColor] = useState(colors.textGray);
+
+  const [buttonColor, setButtonColor] =useState(colors.gray);
+  const [buttonAble, setBttonAble] =useState(true);
+
+  useEffect(() => {
+    if(idTextColor == colors.highlightBlue && pwTextColor == colors.highlightBlue && pwCheckTextColor == colors.highlightBlue && nicknameTextColor == colors.highlightBlue && telTextColor == colors.highlightBlue){
+      setButtonColor(colors.loginBlue);
+      setBttonAble(false);
+    }
+    else{
+      setButtonColor(colors.gray);
+      setBttonAble(true);
+    }
+
+  },[idTextColor, pwTextColor, telTextColor, pwCheckTextColor, nicknameTextColor, telTextColor])
+
+  function is_id(asValue) {
+    var regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,19}$/;
+    return regExp.test(asValue);
+  }
+  function is_pw(asValue) {
+    var regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!?()$#^*~%&@])[a-zA-Z][a-zA-Z0-9!?()$#^*~%&@]{7,19}$/;
+    return regExp.test(asValue);
+  }
+  function is_nickname(asValue) {
+    var regExp = /^.{1,20}$/;
+    return regExp.test(asValue);
+  }
+  function is_tel(asValue) {
+    //전화번호 길이 바꾸기
+    var regExp = /^010\d{8}$/;
+    return regExp.test(asValue);
+  }
+
+  //id 조건 Check part
+  //입력 필드의 값이 변경되었을 때 호출되는 핸들러 함수
+  const handleIdValue = (text) => {
+    setInputId(text);
+    if (is_id(text)) {
+      setIdTextColor(colors.highlightBlue);
+    }
+    else if (!is_id(text)) {
+      setIdTextColor(colors.highlightRed);
+    }
+  };
+
+  //pw 조건 Check part
+  const handlePwValue=(text)=> {
+    setInputPw(text);
+    if (is_pw(text)) {
+      setPwTextColor(colors.highlightBlue);
+    }
+    else if (!is_pw(text)) {
+      setPwTextColor(colors.highlightRed);
+    }
+  }
+  
+  //pwCheck 조건 Check part
+  const handlePwCheckValue=(text)=> {
+    console.log(inputPw)
+    console.log('check:',text)
+
+    setInputPwCheck(text);
+    if (inputPw==text) {
+      setPwCheckTextColor(colors.highlightBlue);
+    }
+    else if (!(inputPw==text)) {
+      setPwCheckTextColor(colors.highlightRed);
+    }
+  }
+
+  //nickname 조건 Check part
+  const handleNicknameValue=(text)=> {
+    setInputNickname(text);
+    if (is_nickname(text)) {
+      setNicknameTextColor(colors.highlightBlue);
+    }
+    else if (!is_nickname(text)) {
+      setNicknameTextColor(colors.highlightRed);
+    }
+  }
+  
+  //tel 조건 Check part
+  const handleTelValue=(text)=> {
+    setInputTel(text);
+    if (is_tel(text)) {
+      setTelTextColor(colors.highlightBlue);
+    }
+    else if (!is_tel(text)) {
+      setTelTextColor(colors.highlightRed);
+    }
+  }
+
+  const goJoin = () => {
+    console.log(`${inputId}`)
+  }
+  return (
+
+    <View style={styles.container}>
+      {/* inputText 눌렀을 경우 키보드 올라가게 하기 */}
+      <KeyboardAwareScrollView style={{ height: height * 100 }}>
+        <View style={styles.contentsArea}>
+          <View style={styles.logoArea}>
+            <Image style={styles.logo} source={require("../../assets/img/SkinBuddy_logo.png")}></Image>
+          </View>
+          <View style={{ height: height * 425 }}>
+            <View style={styles.inputArea}>
+              <InputTextBox title={'ID'} value={'inputId'} onChangeText={handleIdValue} />
+              <Text style={{ color: idTextColor, fontSize: width*13 }}>• 아이디를 입력해주세요{'\n'}(영문+숫자, 6글자 이상, 20글자 이하)</Text>
+              <InputTextBox title={'PW'} value={'inputPw'} onChangeText={handlePwValue} type={'password'}/>
+              <Text style={{ color: pwTextColor, fontSize: width*13 }}>• 비밀번호를 입력해주세요{'\n'}(영문+숫자+특수기호, 8글자 이상, 20글자 이하)</Text>
+              <InputTextBox title={'PW Check'} value={'inputPwCheck'} onChangeText={handlePwCheckValue} type={'password'}/>
+              <Text style={{ color: pwCheckTextColor, fontSize: width*13 }}>• 입력하신 비밀번호를 다시 입력해주세요)</Text>
+              <InputTextBox title={'Nickname'} value={'inputNickname'} onChangeText={handleNicknameValue}/>
+              <Text style={{ color: nicknameTextColor, fontSize: width*13 }}>• 사용하실 닉네임을 입력해주세요 (20글자 이하)</Text>
+              <InputTextBox title={'Tel'} value={'inputTel'} onChangeText={handleTelValue} />
+              <Text style={{ color: telTextColor, fontSize: width*13 }} >• 본인 전화번호의 숫자만 입력해주세요</Text>
+            </View>
+          </View>
+          <View style={styles.buttonArea}>
+            <BasicButton color={buttonColor} size={300} title={"회원가입"} onPress={goJoin} able={buttonAble}/>
+          </View>
+        </View>
+      </KeyboardAwareScrollView >
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  contentsArea: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  logoArea: {
+    width: width * 400,
+    height: 130,
+    marginTop: height * 40,
+    alignItems: 'center',
+  },
+  logo: {
+    height: height * 150,
+    width: width * 150,
+  },
+  inputArea: {
+    width: width * 300,
+    height: height * 160,
+  },
+  buttonArea: {
+    width: width * 300,
+    height: height * 60,
+    marginTop: height * 10,
+  },
+
+});
