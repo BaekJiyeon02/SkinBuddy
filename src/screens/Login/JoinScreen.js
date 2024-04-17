@@ -8,9 +8,12 @@ import BackButton from '../../components/BackButton';
 import BasicButton from '../../components/BasicButton';
 import { TouchableOpacity, } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import axios from 'axios';
 
 export default function JoinScreen() {
   const navigation = useNavigation();
+  const joinApiUrl = 'http://52.79.237.164:3000/user/create';
+  
 
   // 입력 필드의 값을 추적하기 위해 useState 훅을 사용.
   const [inputId, setInputId] = useState('');
@@ -85,9 +88,6 @@ export default function JoinScreen() {
   
   //pwCheck 조건 Check part
   const handlePwCheckValue=(text)=> {
-    console.log(inputPw)
-    console.log('check:',text)
-
     setInputPwCheck(text);
     if (inputPw==text) {
       setPwCheckTextColor(colors.highlightBlue);
@@ -120,7 +120,23 @@ export default function JoinScreen() {
   }
 
   const goJoin = () => {
-    console.log(`${inputId}`)
+
+    const postData = {
+      "userId" : inputId,
+      "psword" : inputPw,
+      "nickname" : inputNickname,
+      "tel" : inputTel
+  };
+
+    axios.post(joinApiUrl, postData)
+    .then(response => {
+        // 요청 성공 시 처리
+        console.log('Data:', response.data);
+    })
+    .catch(error => {
+        // 요청 실패 시 처리
+        console.error('Error:', error);
+    });
   }
   return (
 
