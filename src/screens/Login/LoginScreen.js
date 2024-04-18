@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as Updates from 'expo-updates';
 import { styleG, colors, width, height } from '../../assets/globalStyles';
 import InputTextBox from '../../components/InputTextBox';
 import BackButton from '../../components/BackButton';
 import BasicButton from '../../components/BasicButton';
+import { AuthContext } from '../../../AuthProvider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -15,6 +17,7 @@ export default function App() {
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputPw] = useState('');
 
+    const { login } = useContext(AuthContext);
 
 
     const loginApiUrl = 'http://52.79.237.164:3000/user/login';
@@ -26,33 +29,46 @@ export default function App() {
     };
 
     //pw 입력 데이터 저장
-    const handlePwValue=(text)=> {
+    const handlePwValue = (text) => {
         setInputPw(text);
     }
 
     //로그인 성공시 상태 업데이트
     const handleLoginSuccess = async (id, token) => {
-        await AsyncStorage.setItem('userId', id);
-        // await AsyncStorage.setItem('userToken', token); //필요할시 사용
+        await login(id)
+        await Updates.reloadAsync();
     };
 
+    const noLogin = (data) => {
+        Alert.alert(
+            data['message'],
+            '',
+            [
+                { text: '확인' },
+            ],
+            { cancelable: false } // 경고 창을 취소할 수 없는 경우 설정합니다.
+        );
+    }
     const goLogin = () => {
 
         const postData = {
-            "userId" : inputId,
-            "psword" : inputPw,
+            "userId": inputId,
+            "psword": inputPw,
         };
-      
-          axios.post(loginApiUrl, postData)
-          .then(response => {
-              // 요청 성공 시 처리
-              handleLoginSuccess(postData.userId, true)
-              navigation.navigate("Stack")
-          })
-          .catch(error => {
-              // 요청 실패 시 처리
-              console.error('Error:', error);
-          });
+
+        axios.post(loginApiUrl, postData)
+            .then(response => {
+                // 요청 성공 시 처리
+                console.log(response.data)
+                
+                if(response.data['property'] == 200){
+                    handleLoginSuccess(postData['userId'], true)}
+                else{noLogin(response.data)}
+            })
+            .catch(error => {
+                // 요청 실패 시 처리
+                console.error('Error:', error);
+            });
 
     }
     const goJoin = () => {
@@ -71,19 +87,19 @@ export default function App() {
                         <Image style={styles.logo} source={require("../../assets/img/SkinBuddy_logo.png")}></Image>
                     </View>
                     <View style={styles.inputArea}>
-                        <InputTextBox title={'ID'} value={inputId} onChangeText={handleIdValue}/>
-                        <InputTextBox title={'PW'} value={inputPw} onChangeText={handlePwValue} type={'password'}/>
+                        <InputTextBox title={'ID'} value={inputId} onChangeText={handleIdValue} />
+                        <InputTextBox title={'PW'} value={inputPw} onChangeText={handlePwValue} type={'password'} />
                     </View>
                     <View style={styles.buttonArea}>
-                        <BasicButton color={colors.loginBlue} size={300} title={"로그인"} onPress={goLogin}/>
+                        <BasicButton color={colors.loginBlue} size={300} title={"로그인"} onPress={goLogin} />
                         <BasicButton color={colors.loginSkyBlue} size={300} category={"topMargin"} title={"비회원으로 접속"} />
                     </View>
                     <View style={styles.hrefTextArea}>
                         <TouchableOpacity onPress={goJoin}>
-                            <Text style={[styleG.textBold, { textDecorationLine: 'underline', color: colors.gray, fontSize: width * 17, margin:10, }]}>회원가입</Text>
+                            <Text style={[styleG.textBold, { textDecorationLine: 'underline', color: colors.gray, fontSize: width * 17, margin: 10, }]}>회원가입</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={goFind}>
-                            <Text style={[styleG.textBold, { textDecorationLine: 'underline', color: colors.gray, fontSize: width * 17 , margin:10,}]}>아이디/비밀번호 찾기</Text>
+                            <Text style={[styleG.textBold, { textDecorationLine: 'underline', color: colors.gray, fontSize: width * 17, margin: 10, }]}>아이디/비밀번호 찾기</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -121,8 +137,8 @@ const styles = StyleSheet.create({
         width: width * 300,
         height: height * 120,
     },
-    hrefTextArea:{
-        flexDirection:'row',
+    hrefTextArea: {
+        flexDirection: 'row',
         alignItems: 'center'
     }
 
