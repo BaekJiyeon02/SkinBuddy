@@ -12,11 +12,11 @@ export default function AcneAnalysisScreen() {
   useFocusEffect( //탭 활성화 인식
     React.useCallback(() => {
       // 탭이 활성화될 때 실행되는 함수
-      console.log('탭이 활성화되었습니다.');
+      // console.log('탭이 활성화되었습니다.');
 
       // 탭이 비활성화될 때 실행되는 함수
       return () => {
-        console.log('탭이 비활성화되었습니다.');
+        // console.log('탭이 비활성화되었습니다.');
         // 여기에 실행하고자 하는 특정 함수를 추가합니다.
       };
     }, [])
@@ -72,8 +72,8 @@ export default function AcneAnalysisScreen() {
         </View>
       </View>
       <View style={styles.ButtonArea}>
-        <BasicButton color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'} />
-        <BasicButton color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
       </View>
     </View>
   );
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'columm',
+    justifyContent: 'center',
     paddingBottom: height * 20,
     backgroundColor: 'white',
   },
