@@ -1,3 +1,4 @@
+// 사진 저장시 jpg, jpeg로, 정사각형
 import * as React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Entypo} from '@expo/vector-icons'
