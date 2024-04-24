@@ -16,26 +16,106 @@ export default function MainScreen() {
   const navigation = useNavigation();
 
   // AuthContext에서 userId와 logout 함수를 가져오기
-  const {userId, userName, skinType, loading, logout } = useContext(AuthContext);
+  const {userId, userName, skinType, loading, logout, doScore, rsScore, pnScore, wtScore } = useContext(AuthContext);
   
   const [backColor, setBackColor] = useState(colors.buttonSkyBlue);
   const [userMbti, setUserMbti] = useState(skinType);
   const [doResult,setDoResult]=useState(0);
+  const [rsResult,setRsResult]=useState(0);
+  const [pnResult,setPnResult]=useState(0);
+  const [wtResult,setWtResult]=useState(0);
+  const [doType,setDoType]=useState('');
+  const [rsType,setRsType]=useState('');
+  const [pnType,setPnType]=useState('');
+  const [wtType,setWtType]=useState('');
+
 
 
 
   useEffect(() => {
-    // 컴포넌트가 마운트된 후 실행되는 부분
-    ScoreCalcDO(); // 함수 호출
-  }, [loading, userId] //doResult 값이 변경될때마다 로그
+    setUserMbti(skinType)
+    ScoreCalcDO(); 
+    ScoreCalcRS();
+    ScoreCalcPN();
+    ScoreCalcWT();
+    mbtiColor();
+
+  }, [loading, userId, skinType] //doResult 값이 변경될때마다 로그
   );
+
+  const mbtiColor=()=>{
+
+  }
 
 
   const ScoreCalcDO=()=>{
-    const doScore=27;
-    if(doScore>=26){
-      const score=15*(doScore/17);
-      setDoResult(score)
+    const doResult=doScore;
+    console.log('doResult:',doResult)
+    if(doResult>26){
+      // const score=15*(doResult/17);
+      setDoResult(doResult*2.8)
+      // console.log('score:',score)
+      setDoType('Oily')
+    }
+    else if(doResult<=26){
+      setDoResult(doResult*2)
+      setDoType('Dry')
+    }
+  }
+
+  //최저값 18, 최고값 72
+  const ScoreCalcRS=()=>{
+    const rsResult=rsScore;
+    console.log('rsResult:',rsResult)
+    if(rsResult>29){
+      // const score=15*(doResult/17);
+      setRsResult(rsResult*1.7)
+      // console.log('score:',score)
+      setRsType('Sensitive')
+    }
+    else if(rsResult<=29){
+      if(rsResult>24){
+        setRsResult(rsResult*2)
+      }
+      else{
+        setRsResult(rsResult)
+      }
+      setRsType('Resistent')
+    }
+  }
+
+  //최저값 10, 최고값 40
+  const ScoreCalcPN=()=>{
+    const pnResult=pnScore;
+    console.log('pnResult:',pnResult)
+    if(pnResult>30){
+      setPnResult(pnResult*3)
+      setPnType('Pigment')
+    }
+    else if(pnResult<=30){
+      setPnResult(pnResult*2)
+      setPnType('Non-Pigment')
+    }
+  }
+  //최저값 20, 최고값 85
+  const ScoreCalcWT=()=>{
+    const wtResult=wtScore;
+    console.log('wtResult:',wtResult)
+    if(wtResult>40){
+      if(wtResult<=60){
+        setWtResult(wtResult*1.8)
+      }
+      else if(wtResult<75 && wtResult>60){
+        setWtResult(wtResult*1.6)
+      }
+      else{
+        setWtResult(wtResult*1.4)
+      }
+      setWtType('Wrinkle')
+    }
+    else if(wtResult<=40){
+      setWtResult(wtResult)
+      setWtType('Tight')
     }
   }
 
@@ -44,7 +124,6 @@ export default function MainScreen() {
     await Updates.reloadAsync();
     
   }
-  
   if (loading) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -70,15 +149,16 @@ export default function MainScreen() {
         {/* MBTI 결과 그래프 */}
         <View style={styles.mbtiResult}>
           <View style={styles.mbti}>
+            {/* 임시 로그아웃 버튼 */}
             <TouchableOpacity style={[styles.mbtiBlock, { backgroundColor: backColor }]} onPress={LogoutProcess}>
               <Text style={styles.mbtiText}>{userMbti}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.graph}>
-            <MbtiGraph category={'DO'} score={135}></MbtiGraph>
-            <MbtiGraph category={'RS'} score={135}></MbtiGraph>
-            <MbtiGraph category={'PN'} score={130}></MbtiGraph>
-            <MbtiGraph category={'WT'} score={130}></MbtiGraph>
+            <MbtiGraph category={doType} score={doResult}></MbtiGraph>
+            <MbtiGraph category={rsType} score={rsResult}></MbtiGraph>
+            <MbtiGraph category={pnType} score={pnResult}></MbtiGraph>
+            <MbtiGraph category={wtType} score={wtResult}></MbtiGraph>
           </View>
         </View>
       </View>
