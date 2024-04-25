@@ -15,7 +15,6 @@ export default function DeleteAccountScreen() {
   const [inputPw, setInputPw] = useState('');
 
   const [pwTextColor, setPwTextColor] = useState(colors.textGray);
-  const [pwCheckTextColor, setPwCheckTextColor] = useState(colors.textGray);
   const [buttonColor, setButtonColor] = useState(colors.gray);
   const [buttonAble, setBttonAble] = useState(true);
 
@@ -36,7 +35,7 @@ export default function DeleteAccountScreen() {
       '정말 탈퇴 하시겠습니까?',
       [
         {
-          text: '확인', onPress: async () => {
+          text: '확인', onPress:  () => {
             deleteAccount(inputPw)
           }
         }, { text: '취소' }
@@ -61,9 +60,10 @@ export default function DeleteAccountScreen() {
   }
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.inputArea}>
-        <Text style={{ color: pwCheckTextColor, fontSize: width * 25 }}>비밀번호 :</Text>
+        <Text style={{ color: colors.textGray, fontSize: width * 25 }}>비밀번호 :</Text>
         <TextInput
           style={styles.textBox}
           secureTextEntry={true}
@@ -73,7 +73,7 @@ export default function DeleteAccountScreen() {
         />
       </View>
       <View style={styles.buttonArea}>
-        <BasicButton category={'SideMargin'} color={buttonColor} size={100} title={"탈퇴"} able={buttonAble} onPress={goDelete} />
+        <BasicButton color={buttonColor} size={100} title={"탈퇴"} able={buttonAble} onPress={goDelete} />
       </View>
     </View>
   );
