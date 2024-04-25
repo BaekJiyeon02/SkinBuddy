@@ -8,7 +8,7 @@ import InputTextBox from '../../components/InputTextBox';
 import BasicButton from '../../components/BasicButton';
 import { AuthContext } from '../../../AuthProvider';
 
-export default function ChangePasswordScreen() {
+export default function DeleteAccountScreen() {
 
   const { deleteAccount } = useContext(AuthContext);
 
