@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef,useContext } from 'react';
 import { StyleSheet, Text, View, Image, Button, ActivityIndicator } from 'react-native';
 import MbtiGraph from '../components/MbtiGraph';
 import AdBanner from '../components/AdBanner';
-import * as Updates from 'expo-updates';
 import { useNavigation } from '@react-navigation/native';
 import { styleG, colors, width, height } from '../assets/globalStyles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,11 +10,9 @@ import { AuthContext } from '../../AuthProvider';
 
 
 
-
 export default function MainScreen() {
   const navigation = useNavigation();
 
-  // AuthContext에서 userId와 logout 함수를 가져오기
   const {userId, userName, skinType, loading, logout, doScore, rsScore, pnScore, wtScore } = useContext(AuthContext);
   
   const [backColor, setBackColor] = useState(colors.buttonSkyBlue);
@@ -119,11 +116,7 @@ export default function MainScreen() {
     }
   }
 
-  const LogoutProcess=async()=>{
-    await logout()
-    await Updates.reloadAsync();
-    
-  }
+
   if (loading) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -136,6 +129,7 @@ export default function MainScreen() {
   
   return (
     <View style={styles.container}>
+      {/* 광고 배너 */}
       <View style={styles.adBanner}>
         <AdBanner />
       </View>
@@ -149,8 +143,7 @@ export default function MainScreen() {
         {/* MBTI 결과 그래프 */}
         <View style={styles.mbtiResult}>
           <View style={styles.mbti}>
-            {/* 임시 로그아웃 버튼 */}
-            <TouchableOpacity style={[styles.mbtiBlock, { backgroundColor: backColor }]} onPress={LogoutProcess}>
+            <TouchableOpacity style={[styles.mbtiBlock, { backgroundColor: backColor }]} onPress={()=>{skinType=='????'?navigation.navigate('MBTI'):navigation.navigate('MbtiTestResult')}}>
               <Text style={styles.mbtiText}>{userMbti}</Text>
             </TouchableOpacity>
           </View>
