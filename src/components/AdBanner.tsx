@@ -17,6 +17,7 @@ interface CarouselItems{
 
 export default function adBanner({ title, onPress, color, size }) {
 
+
     let flatListRef=useRef<FlatList<CarouselItems> | null>();
 
     const renderItems: React.FC<{item: CarouselItems}> =({item})=>{
@@ -56,15 +57,15 @@ export default function adBanner({ title, onPress, color, size }) {
 
 const styles = StyleSheet.create({
     container:{
-        height:320 ,
+        height:320 * Number(height),
 
 
     },
     sliderImage:{
-        width: 430,
-        height:250 ,
+        width: 430 * Number(width),
+        height:250 * Number(height),
         resizeMode:'cover',
-        marginVertical:50,
+        marginVertical:50 * Number(height),
 
     },
     footerText:{
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     footer:{
         flexDirection:'row',
         justifyContent:'space-between',
-        height:50,
-        paddingHorizontal:40,
+        height:50 * Number(height),
+        paddingHorizontal:40  * Number(width),
         alignItems:'center',
         backgroundColor:'#000',
     }
