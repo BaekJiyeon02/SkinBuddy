@@ -68,7 +68,7 @@ export default function App() {
       </View>
       <View style={styles.ButtonArea}>
         <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'} />
-        <BasicButton color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
       </View>
     </View>
   );
