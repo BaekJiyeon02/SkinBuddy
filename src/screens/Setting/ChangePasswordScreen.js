@@ -86,6 +86,7 @@ export default function ChangePasswordScreen() {
 
   return (
     <View style={styles.container}>
+      <KeyboardAwareScrollView style={{paddingTop: height* 200}}>
       <View style={styles.inputArea}>
         <InputTextBox title={'기존 비밀번호'} value={'inputPw'} onChangeText={handlePwValue} type={'password'} />
         <Text style={{ color: pwTextColor, fontSize: width * 13 }}>• 기존 비밀번호를 입력해주세요</Text>
@@ -96,8 +97,9 @@ export default function ChangePasswordScreen() {
 
       </View>
       <View style={styles.buttonArea}>
-        <BasicButton category={'SideMargin'} color={buttonColor} size={100} title={"변경"} able={buttonAble} onPress={ChangeProcess}/>
+        <BasicButton color={buttonColor} size={100} title={"변경"} able={buttonAble} onPress={ChangeProcess}/>
       </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
