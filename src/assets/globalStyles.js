@@ -5,17 +5,24 @@ export const colors = {
   buttonBlue: '#7CA7F1',
   buttonSkyBlue: '#C0D8FF',
 
+  //로그인 색상
+  loginBlue: "#9ABBF3",
+  loginSkyBlue: "#D4E4FF",
+
   //글자 색상
-  textGrey: '#626262',
+  textGray: '#626262',
+  softGray: "#F8F8F8",
+  darkGray: '#9B9B9B',
+  gray : "#B1B1B1",
   highlightBlue: "#9ABBF3",
   highlightRed: "#FFA4A4",
   activeText: "#000000",
+  inputBoxColor:"#F0F0F0",
 
-  //기타 색상
-  softGrey: "#F8F8F8",
-  darkGrey: '#BDBDBD',
 
   // MBTI 색상
+  mbtiBackColor: '#F5F5F5',
+
   DRPT: '#46A5C4',
   DRNT: '#9EC0E7',
   DSPT: '#C469AA',
@@ -67,5 +74,4 @@ export const styleG = {
   textBold: {
     fontFamily: 'NanumSquareRoundB',
   }
-
 }
