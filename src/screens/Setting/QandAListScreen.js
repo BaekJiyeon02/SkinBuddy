@@ -70,12 +70,14 @@ export default function QandAListScreen() {
               <View style={{ padding: width * 15 }}>
                 <Text>{qa.createday}</Text>
                 {expandedIndex === index ? (
-                  
+                  <View>
                   <Text style={[styleG.textStyle, { fontSize: width * 20 }]}>[{qa.answer ? (<Text style={{color:colors.highlightBlue}}>답변완료</Text>) : (<Text style={{color:colors.highlightRed}}>답변대기</Text>)}] {qa.question}</Text>
+                  
+                  {qa.answer?(<Text style={[styleG.textStyle, { fontSize: width * 20, marginTop:height * 15 }]}><Text style={{color:colors.highlightBlue}}>답변 :</Text>{qa.answer}</Text>):(<Text></Text>)}
+                  </View>
                 ) : (
                   <View>
                   <Text numberOfLines={1} style={[styleG.textStyle, { fontSize: width * 20 }]}>[{qa.answer ? (<Text style={{color:colors.highlightBlue}}>답변완료</Text>) : (<Text style={{color:colors.highlightRed}}>답변대기</Text>)}] {qa.question}</Text>
-                  {qa.answer?(<Text style={[styleG.textStyle, { fontSize: width * 20 }]}>{qa.answer}</Text>):(<Text></Text>)}
                   </View>
                   )}
               </View>
