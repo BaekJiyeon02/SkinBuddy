@@ -20,10 +20,14 @@ export const AuthProvider = ({ children }) => {
     const [pnScore, setPnScore] = useState(0);
     const [wtScore, setWtScore] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [userTel, setUserTel] =  useState('')
 
-    const profileUrl = 'http://52.79.237.164:3000/user/home/profile';
+    const homeProfileUrl = 'http://52.79.237.164:3000/user/home/profile';
+    const profileUrl = 'http://52.79.237.164:3000/user/profile';
     const deleteUrl = 'http://52.79.237.164:3000/user/delete';
     const changeUrl = 'http://52.79.237.164:3000/user/change/psword';
+    const profileChangeUrl = 'http://52.79.237.164:3000/user/profile/update';
+
 
 
     // AsyncStorage에서 로그인 상태와 사용자 아이디를 불러오는 함수
@@ -35,6 +39,8 @@ export const AuthProvider = ({ children }) => {
             if (storedUserId !== null) {
                 setUserId(storedUserId);
                 profileCall(storedUserId)
+                homeProfileCall(storedUserId)
+
             }
             else if (storedUserId == null) {
                 setUserId(false)
@@ -146,6 +152,51 @@ export const AuthProvider = ({ children }) => {
 
 
     }
+    // (홈페이지)프로필을 불러오는 함수
+    const homeProfileCall = async (id) => {
+
+        const postData = {
+            "userId": id,
+        };
+        axios.post(homeProfileUrl, postData)
+            .then(response => {
+                // 요청 성공 시 처리
+                console.log(response.data)
+                homeProfile(response.data)
+            })
+            .catch(error => {
+                // 요청 실패 시 처리
+                console.error('Failed to load user profile:', error);
+            });
+    }
+    //(홈페이지)프로필 상태를 업데이트 하는 함수
+    const homeProfile = async (data) => {
+        setLoading(true)
+        try {
+            console.log('data: ', data)
+            setUserName(data['nickname']);
+           
+            if (data['skinType'] !== null) {
+
+                await AsyncStorage.setItem('skinType', data['skinType']);
+
+                setDoScore(data['oilyScore'])
+                setRsScore(data['resistanceScore'])
+                setPnScore(data['non_pigmentScore'])
+                setWtScore(data['tightScore'])
+                setSkinType(data['skinType'])
+                setLoading(false);
+
+            }
+            else if (data['skinType'] == null) {
+                setSkinType('????')
+            }
+
+        } catch (error) {
+            console.error('Failed to send user profile:', error);
+        }
+        setLoading(false);
+    }
     // 프로필을 불러오는 함수
     const profileCall = async (id) => {
 
@@ -163,39 +214,72 @@ export const AuthProvider = ({ children }) => {
                 console.error('Failed to load user profile:', error);
             });
     }
+    
     //프로필 상태를 업데이트 하는 함수
     const profile = async (data) => {
         setLoading(true)
         try {
-            console.log('data: ', data)
-            setUserName(data['nickname']);
-            if (data['skinType'] !== null) {
-
-                await AsyncStorage.setItem('skinType', data['skinType']);
-
-                setDoScore(data['oilyScore'])
-                setRsScore(data['resistanceScore'])
-                setPnScore(data['non_pigmentScore'])
-                setWtScore(data['tightScore'])
-                setSkinType(data['skinType'])
-                setLoading(false);
-
-            }
-            else if (data['skinType'] == null) {
-                setSkinType('????')
-            }
+            setUserTel(data['tel'])
         } catch (error) {
             console.error('Failed to send user profile:', error);
         }
         setLoading(false);
     }
 
-    const refreshMbti = () => {
-        profileCall(userId)
+    const updateProfile=(name, tel)=>{
+        
+        const postData = {
+            "userId" : userId,
+            "nickname" : name,
+            "tel" : tel
+        }
+        setLoading(true)
+        axios.put(profileChangeUrl, postData)
+            .then(response => {
+                // 요청 성공 시 처리
+                console.log(response.data)
+                if (response.data['property'] == 200) {
+                    
+                    console.log(postData)
+                    Alert.alert(
+                        response.data['message'],
+                        '',
+                        [
+                            { text: '확인' , onPress:()=>{
+                                Updates.reloadAsync();
+                                setLoading(false)
+                            }},
+                        ],
+                        );
+                    }
+                    
+                    else if(response.data['property']==304){
+                        Alert.alert(
+                            response.data['message'],
+                            '',
+                            [
+                                { text: '확인',onPress:()=>{
+                                    setLoading(false)
+                                }},
+                        ],
+                    );
+                }
+            })
+            .catch(error => {
+                // 요청 실패 시 처리
+                console.error('Failed to change user profile:', error);
+            });
+
     }
 
+    const refreshMbti = () => {
+        homeProfileCall(userId)
+    }
+
+
+
     return (
-        <AuthContext.Provider value={{ userId, login, logout, loading, userName, skinType, doScore, rsScore, pnScore, wtScore, changePassword, refreshMbti, deleteAccount }}>
+        <AuthContext.Provider value={{ userId, login, logout, loading, userName, skinType, doScore, rsScore, pnScore, wtScore, changePassword, refreshMbti, deleteAccount, userTel, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );
