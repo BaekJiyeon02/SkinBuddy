@@ -1,7 +1,13 @@
 import { StyleSheet, View } from "react-native"
-import { colors, width, height, styleG } from '../assets/globalStyles';
+import { colors, width, height } from '../assets/globalStyles';
 
-export default function Subseperator() {
+export default function Subseperator({type}) {
+    if(type=='thin'){
+
+        return (
+            <View style={styles.subseperatorThin}></View>
+        )
+    }
 
     return (
         <View style={styles.subseperator}></View>
@@ -10,8 +16,13 @@ export default function Subseperator() {
 const styles = StyleSheet.create({
 
     subseperator: {
-        backgroundColor: 'grey',
+        backgroundColor: colors.darkGray,
         width: width * 400,
-        height: 1,
+        height: height * 2,
+    },
+    subseperatorThin: {
+        backgroundColor: colors.darkGray,
+        width: width * 400,
+        height: height * 1,
     }
 })
