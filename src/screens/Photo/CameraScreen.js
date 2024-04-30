@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import CameraButton from '../../components/CameraButton'
+import { colors, width, height } from '../../assets/globalStyles';
 
 export default function App() {
     const [hasCameraPermission, setHasCamerPermission] = useState(null); //카메라 접근 권한 여부
@@ -69,13 +70,13 @@ export default function App() {
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        padding: 30
+                        padding: 20
                     }}>
                         <CameraButton icon={'retweet'} onPress={() => {
                             setType(type === CameraType.back ? CameraType.front : CameraType.back)
                         }} />
                         <CameraButton icon={'flash'}
-                            color={flash === Camera.Constants.FlashMode.off ? 'gray' : '#f1f1f1'}
+                            color={flash === Camera.Constants.FlashMode.off ? 'gray' : colors.darkGray}
                             onPress={() => {
                                 setFlash(flash === Camera.Constants.FlashMode.off
                                     ? Camera.Constants.FlashMode.on
@@ -93,8 +94,8 @@ export default function App() {
                         justifyContent: 'space-between',
                         paddingHorizontal: 50
                     }}>
-                        <CameraButton title={"Re-take"} icon="retweet" onPress={() => setImage(null)} />
-                        <CameraButton title={"Save"} icon="check" onPress={saveImage} />
+                        <CameraButton title={"다시 찍기"} icon="retweet" onPress={() => setImage(null)} />
+                        <CameraButton title={"선택 완료"} icon="check" onPress={saveImage} />
                     </View>
                     :
                     <View style={styles.takePictureButtonArea}>
@@ -114,11 +115,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     camera: {
-        flex: 1,
-        borderRadius: 20,
+        width : width * 450,
+        height : height * 450,
+
     },
     takePictureButtonArea: {
-        marginBottom: 30,
+        marginBottom: 10,
 
     }
 
