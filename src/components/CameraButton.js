@@ -2,6 +2,7 @@
 import * as React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Entypo} from '@expo/vector-icons'
+import { colors, width, height, styleG } from '../assets/globalStyles';
 
 export default function CameraButton({ title, onPress, icon, color,size }){
     if(size==undefined){
@@ -9,7 +10,7 @@ export default function CameraButton({ title, onPress, icon, color,size }){
     }
     return(
         <TouchableOpacity onPress={onPress} style={styles.button}>
-            <Entypo name={icon} size={size} color={color ? color : '#f1f1f1'} />
+            <Entypo name={icon} size={size} color={color ? color : colors.darkGray} />
             <Text style={styles.text}>{title}</Text>
         </TouchableOpacity>
     )
@@ -17,15 +18,15 @@ export default function CameraButton({ title, onPress, icon, color,size }){
 
 const styles = StyleSheet.create({
     button: {
-        height: 60,
+        height: height * 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
     },
     text: {
         fontWeight:'bold',
-        fontSize: 16,
-        color: '#f1f1f1',
-        marginLeft: 10
+        fontSize: width * 16,
+        color: colors.darkGray,
+        marginLeft: width * 10
     }
 })
