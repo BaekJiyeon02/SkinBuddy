@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, Button, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, StatusBar, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
@@ -39,6 +39,11 @@ import NoticeScreen from './src/screens/Setting/NoticeScreen';
 import ProfileEditScreen from './src/screens/Setting/ProfileEditScreen';
 import QandAListScreen from './src/screens/Setting/QandAListScreen';
 import QandAWriteScreen from './src/screens/Setting/QandAWriteScreen';
+import TermsOfUseScreen from './src/screens/Setting/TermsOfUseScreen';
+import VersionInformationScreen from './src/screens/Setting/VersionInformationScreen';
+import DeleteAccountScreen from './src/screens/Setting/DeleteAccountScreen';
+
+
 
 // 로그인/회원가입
 import LoginScreen from './src/screens/Login/LoginScreen';
@@ -81,7 +86,6 @@ const BasicOption = {
 }
 
 const BackButtonOption = {
-
   HeaderBackButton: true,
   headerBackTitleVisible: false,
   headerTintColor: "black"
@@ -93,6 +97,23 @@ const NoLogoHeaderOption = {
   headerTitle: '',
 }
 
+const MainHeaderOption = {
+
+}
+
+function SettingPageScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('SettingScreen')}>
+      <Image
+        source={require('./src/assets/img/setting.png')}
+        style={{ width: width * 30, height: width * 30, marginRight: width * 30, }}
+      />
+    </TouchableOpacity>
+  )
+}
+
 function Main() {
   return (
     <Stack.Navigator>
@@ -100,7 +121,62 @@ function Main() {
         <Stack.Screen name="MainScreen" component={MainScreen}
           options={{
             ...BasicOption,
-            headerBackVisible: false,
+            headerRight: () => (
+              <SettingPageScreen />
+            )
+          }} />
+          <Stack.Screen name="MbtiTestResult" component={MbtiTestResultScreen}
+          options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen name='SettingScreen' component={SettingScreen}
+          options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="Notice" component={NoticeScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="QandAList" component={QandAListScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="QandAWrite" component={QandAWriteScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="VersionInformation" component={VersionInformationScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }} />
+        <Stack.Screen name="DeleteAccount" component={DeleteAccountScreen} 
+        options={{
+            ...BasicOption,
+            ...BackButtonOption
           }} />
       </Stack.Group>
     </Stack.Navigator>
@@ -111,7 +187,7 @@ function AiTrouble() {
   return (
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name="AiTroubleScreen" component={AcneAnalysisScreen} options={BasicOption}/>
+        <Stack.Screen name="AiTroubleScreen" component={AcneAnalysisScreen} options={BasicOption} />
         <Stack.Screen name="Camera" component={CameraScreen}
           options={{
             ...BasicOption,
@@ -134,7 +210,7 @@ function AiImprove() {
     <Stack.Navigator>
 
       <Stack.Group>
-        <Stack.Screen name="AiImproveScreen" component={ImprovementAnalysisScreen} options={BasicOption}/>
+        <Stack.Screen name="AiImproveScreen" component={ImprovementAnalysisScreen} options={BasicOption} />
       </Stack.Group>
     </Stack.Navigator>
   )
@@ -145,18 +221,18 @@ function Mbti() {
     <Stack.Navigator>
 
       <Stack.Group>
-        <Stack.Screen name="MBTIScreen" component={MbtiTestScreen} options={BasicOption}/>
+        <Stack.Screen name="MBTIScreen" component={MbtiTestScreen} options={BasicOption} />
         <Stack.Screen name="MbtiTest" component={MbtiTestPaperScreen}
           options={{
             ...BasicOption,
             ...BackButtonOption,
           }} />
         <Stack.Screen name="MbtiTestResult" component={MbtiTestResultScreen}
-                  options={{
-                    ...BasicOption,
-                    ...BackButtonOption
-                  }}
-                  />
+          options={{
+            ...BasicOption,
+            ...BackButtonOption
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
 
@@ -227,48 +303,48 @@ function App() {
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
-            <NavigationContainer>
-            <Tab.Navigator
-          screenOptions={({ route }) => ({
-            headerShown: false,
-            headerBackVisible: false, // 뒤로가기 버튼 숨기기
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              switch (route.name) {
-                case 'main':
-                  iconName = 'icon1';
-                  break;
-                case 'AiTrouble':
-                  iconName = 'icon2';
-                  break;
-                case 'AiImprove':
-                  iconName = 'icon3';
-                  break;
-                case 'MBTI':
-                  iconName = 'icon4';
-                  break;
-                default:
-                  iconName = 'icon5';
-              }
-              return (
-                <Image style={styles.image} name={iconName} source={(imagePaths[iconName])} />
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              headerShown: false,
+              headerBackVisible: false, // 뒤로가기 버튼 숨기기
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
+                switch (route.name) {
+                  case 'main':
+                    iconName = 'icon1';
+                    break;
+                  case 'AiTrouble':
+                    iconName = 'icon2';
+                    break;
+                  case 'AiImprove':
+                    iconName = 'icon3';
+                    break;
+                  case 'MBTI':
+                    iconName = 'icon4';
+                    break;
+                  default:
+                    iconName = 'icon5';
+                }
+                return (
+                  <Image style={styles.image} name={iconName} source={(imagePaths[iconName])} />
 
-              );
-            },
-            tabBarShowLabel: true, // 텍스트 숨기기
-            tabBarActiveTintColor: colors.activeText, // 활성 탭의 텍스트 색상
-            tabBarInactiveTintColor: '#6A6A6A', // 비활성 탭의 텍스트 색상
-            tabBarStyle: { justifyContent:'flex-start',backgroundColor: '#F2F2F2', height: height * 100, paddingBottom: 0, paddingRight: width * 10, paddingLeft: 10 }, // tabBar의 배경색, 크기 조절
-            tabBarLabelStyle: { fontFamily: "NanumSquareRoundEB", fontSize: width * 12, marginBottom:height * 30 },
-          })}
-        >
-          <Tab.Screen name="main" component={Main}  options={{tabBarLabel: '홈'}} />
-          <Tab.Screen name="AiTrouble" component={AiTrouble} options={{ tabBarLabel: 'Ai 트러블 분석' }} />
-          <Tab.Screen name="AiImprove" component={AiImprove} options={{ tabBarLabel: 'Ai 호전도 분석' }}/>
-          <Tab.Screen name="MBTI" component={Mbti} options={{ tabBarLabel: 'MBTI' }}/>
-          <Tab.Screen name="History" component={History} options={{ tabBarLabel: '과거 진단 기록' }}/>
-        </Tab.Navigator>
-            </NavigationContainer>
+                );
+              },
+              tabBarShowLabel: true, // 텍스트 숨기기
+              tabBarActiveTintColor: colors.activeText, // 활성 탭의 텍스트 색상
+              tabBarInactiveTintColor: '#6A6A6A', // 비활성 탭의 텍스트 색상
+              tabBarStyle: { justifyContent: 'flex-start', backgroundColor: '#F2F2F2', height: height * 100, paddingBottom: 0, paddingRight: width * 10, paddingLeft: 10 }, // tabBar의 배경색, 크기 조절
+              tabBarLabelStyle: { fontFamily: "NanumSquareRoundEB", fontSize: width * 12, marginBottom: height * 30 },
+            })}
+          >
+            <Tab.Screen name="main" component={Main} options={{ tabBarLabel: '홈' }} />
+            <Tab.Screen name="AiTrouble" component={AiTrouble} options={{ tabBarLabel: 'Ai 트러블 분석' }} />
+            <Tab.Screen name="AiImprove" component={AiImprove} options={{ tabBarLabel: 'Ai 호전도 분석' }} />
+            <Tab.Screen name="MBTI" component={Mbti} options={{ tabBarLabel: 'MBTI' }} />
+            <Tab.Screen name="History" component={History} options={{ tabBarLabel: '과거 진단 기록' }} />
+          </Tab.Navigator>
+        </NavigationContainer>
 
       )}
     </AuthProvider>
