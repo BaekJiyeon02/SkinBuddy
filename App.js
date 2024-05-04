@@ -15,6 +15,8 @@ import { AuthProvider } from './AuthProvider';
 
 import TabNavigator from './src/screens/TabNavigator';
 
+import DermatologyMapScreen from './src/screens/MapScreen/DermatologyMapScreen';
+
 import AcneAnalysisScreen from './src/screens/AcneAnalysis/AcneAnalysisScreen';
 import AcneAnalysisResultScreen from './src/screens/AcneAnalysis/AcneAnalysisResultScreen';
 
@@ -125,7 +127,7 @@ function Main() {
               <SettingPageScreen />
             )
           }} />
-          <Stack.Screen name="MbtiTestResult" component={MbtiTestResultScreen}
+        <Stack.Screen name="MbtiTestResult" component={MbtiTestResultScreen}
           options={{
             ...BasicOption,
             ...BackButtonOption
@@ -138,43 +140,43 @@ function Main() {
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} 
-        options={{
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} 
-        options={{
+        <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="Notice" component={NoticeScreen} 
-        options={{
+        <Stack.Screen name="Notice" component={NoticeScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} 
-        options={{
+        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="QandAList" component={QandAListScreen} 
-        options={{
+        <Stack.Screen name="QandAList" component={QandAListScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="QandAWrite" component={QandAWriteScreen} 
-        options={{
+        <Stack.Screen name="QandAWrite" component={QandAWriteScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="VersionInformation" component={VersionInformationScreen} 
-        options={{
+        <Stack.Screen name="VersionInformation" component={VersionInformationScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
-        <Stack.Screen name="DeleteAccount" component={DeleteAccountScreen} 
-        options={{
+        <Stack.Screen name="DeleteAccount" component={DeleteAccountScreen}
+          options={{
             ...BasicOption,
             ...BackButtonOption
           }} />
@@ -200,6 +202,16 @@ function AiTrouble() {
             ...BackButtonOption,
           }}
         />
+        <Stack.Screen name="AiTroubleResultScreen" component={AcneAnalysisResultScreen} 
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }} />
+        <Stack.Screen name="DermatologyMapScreen" component={DermatologyMapScreen} 
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }} />
       </Stack.Group>
     </Stack.Navigator>
   )
@@ -211,6 +223,28 @@ function AiImprove() {
 
       <Stack.Group>
         <Stack.Screen name="AiImproveScreen" component={ImprovementAnalysisScreen} options={BasicOption} />
+        <Stack.Screen name="Camera" component={CameraScreen}
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }}
+        />
+        <Stack.Screen name="Album" component={AlbumScreen}
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }}
+        />
+        <Stack.Screen name="ImprovementAnalysisResultScreen" component={ImprovementAnalysisResultScreen} 
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }} />
+          <Stack.Screen name="DermatologyMapScreen" component={DermatologyMapScreen} 
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }} />
       </Stack.Group>
     </Stack.Navigator>
   )
@@ -233,6 +267,11 @@ function Mbti() {
             ...BackButtonOption
           }}
         />
+        <Stack.Screen name="DermatologyMapScreen" component={DermatologyMapScreen} 
+          options={{
+            ...BasicOption,
+            ...BackButtonOption,
+          }} />
       </Stack.Group>
     </Stack.Navigator>
 
@@ -243,7 +282,7 @@ function History() {
   return (
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={BasicOption}/>
         <Stack.Screen name="HistoryDetail" component={HistoryDetailScreen} />
       </Stack.Group>
     </Stack.Navigator>
