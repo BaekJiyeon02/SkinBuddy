@@ -1,13 +1,24 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, width, height, styleG } from '../../assets/globalStyles';
 import BasicButton from '../../components/BasicButton'
 import Subseperator from '../../components/Subseperator'
-
+import Acne from '../../assets/Acne.json';
+import * as ImagePicker from 'expo-image-picker'
+import { AuthContext } from '../../../AuthProvider';
+import axios from 'axios';
 
 export default function AcneAnalysisScreen() {
+
+
+  const AiTroubleUrl = 'http://ceprj.gachon.ac.kr:60017/test';
+  
+
+
+  const { userId } = useContext(AuthContext);
+
 
   useFocusEffect( //탭 활성화 인식
     React.useCallback(() => {
@@ -23,14 +34,68 @@ export default function AcneAnalysisScreen() {
   );
 
 
+  const [image,setImage]=useState('')
+
+
   const navigation = useNavigation();
 
-  const goCamera = () => {
-    navigation.navigate('카메라');
-  }
-  const goAlbum = () => {
-    navigation.navigate('앨범');
-  }
+  const handleImageCameraPress=async()=>{
+    let result = await ImagePicker.launchCameraAsync({
+        mediaTypes:ImagePicker.MediaTypeOptions.All,
+        allowsEditing:true,
+        aspect:[1,1],
+        quality:1
+    })
+    if(!result.canceled){
+      setImage(result.assets[0].uri)
+      sendImageToServer(result.assets[0].uri); // 사진을 서버로 전송
+    }
+}
+  const handleImagePickerPress=async()=>{
+        // 카메라 롤(갤러리) 권한 요청
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        // 권한 확인
+        if (status !== 'granted') {
+            console.log('Camera roll permission denied');
+            return;
+        }
+    
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes:ImagePicker.MediaTypeOptions.All,
+        allowsEditing:true,
+        aspect:[1,1],
+        quality:1
+    })
+    if(!result.canceled){
+      setImage(result.assets[0].uri)
+      sendImageToServer(result.assets[0].uri); // 사진을 서버로 전송
+    }
+}
+
+
+const sendImageToServer = async (imageUri) => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri: imageUri,
+      type: 'image/jpeg',
+      name: 'photo.jpeg',
+    });
+    formData.append('userId', userId);
+
+    axios.post(AiTroubleUrl, formData)
+      .then(response => {
+          console.log("response:",response["data"])
+          const recordId=response['data']['recordId']
+          const acneLevel=response['data']['acneLevel']
+          navigation.navigate("AiTroubleResultScreen",{recordId:recordId, acneLevel:acneLevel})
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    setImage(null);
+};
 
   return (
     <View style={styles.container}>
@@ -60,20 +125,19 @@ export default function AcneAnalysisScreen() {
             이렇게 찍어주세요 :){'\n'}
             {'\t'}• <Text style={{color:colors.highlightBlue}}>화장하지 않은</Text> 맨 얼굴{'\n'}
             {'\t'}• <Text style={{color:colors.highlightBlue}}>선명하게</Text> 찍은 얼굴{'\n'}
-            {'\t'}• <Text style={{color:colors.highlightBlue}}>트러블이 있는 부위</Text>의 얼굴{'\n'}
+            {'\t'}• <Text style={{color:colors.highlightBlue}}>트러블이 있는 부위</Text>의 <Text style={{color:colors.highlightBlue}}>전체</Text> 얼굴{'\n'}
             {'\n'}
             이렇게 찍으면 어려워요 :({'\n'}
             {'\t'}• <Text style={{color:colors.highlightRed}}>초점이 맞지 않는</Text> 얼굴{'\n'}
             {'\t'}• <Text style={{color:colors.highlightRed}}>너무 먼 거리에서</Text> 찍은 얼굴{'\n'}
-            {'\t'}• <Text style={{color:colors.highlightRed}}>옆모습이나 각도가 기운 채</Text>로 찍은 얼굴{'\n'}
+            {'\t'}• <Text style={{color:colors.highlightRed}}>얼굴 일부만</Text> 찍은 얼굴{'\n'}
             {'\t'}• <Text style={{color:colors.highlightRed}}>흔들리게</Text> 찍힌 얼굴{'\n'}
           </Text>
-
         </View>
       </View>
       <View style={styles.ButtonArea}>
-        <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'} />
-        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={handleImageCameraPress} title={'사진 촬영'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={handleImagePickerPress} title={'앨범에서 선택'} />
       </View>
     </View>
   );

@@ -1,12 +1,22 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, width, height, styleG } from '../../assets/globalStyles';
 import BasicButton from '../../components/BasicButton'
 import Subseperator from '../../components/Subseperator'
+import * as ImagePicker from 'expo-image-picker'
+import { AuthContext } from '../../../AuthProvider';
+import axios from 'axios';
 
-export default function App() {
+export default function ImprovementAnalysisScreen() {
+
+  const AiImprovementUrl = 'http://ceprj.gachon.ac.kr:60017/detection_pred';
+
+  const { userId } = useContext(AuthContext);
+  const [image,setImage]=useState('')
+
+
   useFocusEffect( //탭 활성화 인식
     React.useCallback(() => {
       // 탭이 활성화될 때 실행되는 함수
@@ -22,12 +32,68 @@ export default function App() {
 
   const navigation = useNavigation();
 
-  const goCamera = () => {
-    navigation.navigate('카메라');
+  const handleImagePickerPress=async()=>{
+    // 카메라 롤(갤러리) 권한 요청
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    // 권한 확인
+    if (status !== 'granted') {
+        console.log('Camera roll permission denied');
+        return;
+    }
+
+
+let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes:ImagePicker.MediaTypeOptions.All,
+    allowsEditing:true,
+    aspect:[1,1],
+    quality:1
+})
+if(!result.canceled){
+  setImage(result.assets[0].uri)
+  sendImageToServer(result.assets[0].uri); // 사진을 서버로 전송
+}
+}
+
+const handleImageCameraPress=async()=>{
+  let result = await ImagePicker.launchCameraAsync({
+      mediaTypes:ImagePicker.MediaTypeOptions.All,
+      allowsEditing:true,
+      aspect:[1,1],
+      quality:1
+  })
+  if(!result.canceled){
+    setImage(result.assets[0].uri)
+    sendImageToServer(result.assets[0].uri); // 사진을 서버로 전송
   }
-  const goAlbum = () => {
-    navigation.navigate('앨범');
-  }
+}
+
+
+const sendImageToServer = async (imageUri) => {
+
+  const formData = new FormData();
+  formData.append('file', {
+    uri: imageUri,
+    type: 'image/jpeg',
+    name: 'photo.jpeg',
+  });
+  formData.append('userId', userId);
+
+  await axios.post(AiImprovementUrl, formData)
+    .then(response => {
+        console.log("response:",response["data"])
+        const recordId=response['data'].currentData.recordId
+        const troubleTotal=response['data'].currentData.troubleTotal
+        const pastData=response['data'].pastData?response['data'].pastData.recordId:null
+        console.log(response['data'].pastData.recordId)
+        navigation.navigate("ImprovementAnalysisResultScreen",{recordId:recordId, troubleTotal:troubleTotal, pastData:pastData})
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  setImage(null);
+};
   return (
     <View style={styles.container}>
       <View style={styles.titleArea}>
@@ -67,8 +133,8 @@ export default function App() {
         </View>
       </View>
       <View style={styles.ButtonArea}>
-        <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={goCamera} title={'사진 촬영'} />
-        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goAlbum} title={'앨범에서 선택'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonBlue} onPress={handleImageCameraPress} title={'사진 촬영'} />
+        <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={handleImagePickerPress} title={'앨범에서 선택'} />
       </View>
     </View>
   );
