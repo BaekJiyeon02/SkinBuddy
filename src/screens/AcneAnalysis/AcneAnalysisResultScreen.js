@@ -6,6 +6,7 @@ import BasicButton from '../../components/BasicButton'
 import axios from 'axios';
 import Acne from '../../assets/Acne.json';
 import { AuthContext } from '../../../AuthProvider';
+import Subseperator from '../../components/Subseperator'
 
 
 export default function AcneAnalysisResultScreen({ route }) {
@@ -27,7 +28,8 @@ export default function AcneAnalysisResultScreen({ route }) {
   const deleteResultUrl = "http://52.79.237.164:3000/user/skin/record/delete"
 
 
-  const { recordId, acneLevel } = route.params;
+  const { recordId, acneLevel, history, takeDay } = route.params;
+  console.log(history)
 
 
   useFocusEffect( //탭 활성화 인식
@@ -36,9 +38,6 @@ export default function AcneAnalysisResultScreen({ route }) {
       console.log('탭이 활성화되었습니다.');
       // 탭이 비활성화될 때 실행되는 함수
       return () => {
-        if (saveButton == false) {
-          outTabProcess();
-        }
         console.log('탭이 비활성화되었습니다.');
         // 여기에 실행하고자 하는 특정 함수를 추가합니다.
       };
@@ -52,19 +51,6 @@ export default function AcneAnalysisResultScreen({ route }) {
     setContents()
     setLoading(false)
   }, [])
-
-  const outTabProcess = () => {
-    // Alert.alert(
-    //   '트러블 분석 결과가 저장되지 않았습니다',
-    //   '화면에서 벗어나면 기록이 삭제 됩니다. \n 저장하시겠습니까?',
-    //   [
-    //     { text: '저장', onPress: () => goSave() },
-    //     { text: '저장 안함', onPress: () => { goDelete() } }
-    //   ],
-    // );
-
-
-  }
 
   function returnImage() {
 
@@ -168,8 +154,9 @@ export default function AcneAnalysisResultScreen({ route }) {
   }
 
   if (acneLevel == 0) {
-    eturn(
+    return(
       <View style={styles.container}>
+        {history && <View style={styles.historyArea}><Text style={{ fontSize: width * 27, color: 'gray', width: width * 4000, fontFamily: 'NanumSquareRoundEB', marginBottom:height*10 }}>[{takeDay}]트러블 유형 분석</Text><Subseperator /></View>}
         <View style={styles.ContentsArea}>
           <View style={styles.TopArea}>
             <View style={styles.titleArea}>
@@ -202,6 +189,7 @@ export default function AcneAnalysisResultScreen({ route }) {
   return (
     <View style={styles.container}>
       <View style={styles.ContentsArea}>
+      {history && <View style={styles.historyArea}><Text style={{ fontSize: width * 27, color: 'gray', width: width * 4000, fontFamily: 'NanumSquareRoundEB', marginBottom:height*10 }}>[{takeDay}]트러블 유형 분석</Text><Subseperator /></View>}
         <View style={styles.TopArea}>
           <View style={styles.titleArea}>
             <Text style={[styleG.textBold, { marginBottom: height * 20, fontSize: width * 25 }]}>분석 결과</Text>
@@ -276,6 +264,13 @@ const styles = StyleSheet.create({
     width: width * 150,
     height: height * 150,
   },
+  historyArea:{
+    width: width * 450,
+    alignItems: 'flex-start',
+    marginBottom: width * 10,
+    marginLeft: width * 20,
+    marginTop: height* 30
+  }
 
 
 });
