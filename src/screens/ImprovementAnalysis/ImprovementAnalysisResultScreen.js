@@ -6,6 +6,8 @@ import { colors, width, height, styleG } from '../../assets/globalStyles'; //wid
 import BasicButton from '../../components/BasicButton'
 import axios from 'axios';
 import Subseperator from '../../components/Subseperator'
+import { Shadow } from 'react-native-shadow-2';
+
 
 export default function ImprovementAnalysisResultScreen({ route }) {
 
@@ -103,52 +105,65 @@ export default function ImprovementAnalysisResultScreen({ route }) {
   if (pastData) {
 
     return (
-      <View style={styles.container}>
-        {history && <View style={styles.historyArea}><Text style={{ fontSize: width * 27, color: 'gray', width: width * 4000, fontFamily: 'NanumSquareRoundEB', marginBottom: height * 10 }}>[{takeDay}]Ai 호전도 분석</Text><Subseperator /></View>}
-        <View style={styles.resultArea}>
-          <View style={styles.titleArea}>
-            <Text style={[styleG.titleText, { color: colors.textGray, fontSize:width*30 }]}>분석 결과</Text>
-          </View>
-          <View style={styles.contentsArea}>
-            <View style={[styles.imgArea, { marginTop: height * 10, }]}>
-              <View style={styles.beforeArea}>
-                <Image source={{ uri: `data:image/jpeg;base64,${imageData[1]}` }} style={styles.image} />
-                <View style={[styles.beforeAfterBlock,{ backgroundColor: 'white'}]}>
-                  <Text style={styleG.textStyle}>전</Text>
-                  <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{pastTotal}개</Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Shadow
+          viewStyle={{
+            width: width * 400,
+            height: height * 650, marginTop: height * 20,
+          }} // 스타일을 설정하면 됩니다.
+          radius={10} // 그림자 radius
+          offset={[5, 20]} // 그림자 위치 (x, y)
+          startColor="#dde0ea" // 그림자 색상
+        >
+          <View style={styles.container}>
+            {history && <View style={styles.historyArea}><Text style={{ fontSize: width * 27, color: 'gray', width: width * 4000, fontFamily: 'NanumSquareRoundEB', marginBottom: height * 10 }}>[{takeDay}]Ai 호전도 분석</Text><Subseperator /></View>}
+            <View style={styles.resultArea}>
+              <View style={styles.titleArea}>
+                <Text style={[styleG.titleText, { color: colors.textGray, fontSize: width * 30 }]}>분석 결과</Text>
+              </View>
+              <View style={styles.contentsArea}>
+                <View style={[styles.imgArea, { marginTop: height * 10, }]}>
+                  <View style={styles.beforeArea}>
+                    <Image source={{ uri: `data:image/jpeg;base64,${imageData[1]}` }} style={styles.image} />
+                    <View style={[styles.beforeAfterBlock, { backgroundColor: 'white' }]}>
+                      <Text style={styleG.textStyle}>전</Text>
+                      <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{pastTotal}개</Text>
+                    </View>
+                  </View>
+                  <View style={styles.middleArea}>
+                    <Text style={{ fontSize: width * 20 }}> {'→'} </Text>
+                  </View>
+
+                  <View style={styles.afterArea}>
+                    <Image source={{ uri: `data:image/jpeg;base64,${imageData[0]}` }} style={styles.image} />
+                    {pastTotal - troubleTotal > 0 ?
+                      (<View style={[styles.beforeAfterBlock, { backgroundColor: 'white' }]}>
+                        <Text style={styleG.textStyle}>후</Text>
+                        <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{troubleTotal}개</Text>
+                      </View>
+                      )
+                      :
+                      (<View style={[styles.beforeAfterBlock, { backgroundColor: 'white' }]}>
+                        <Text style={styleG.textStyle}>후</Text>
+                        <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{troubleTotal}개</Text>
+                      </View>
+                      )
+                    }
+                  </View>
+
+                </View>
+                <View style={styles.textArea}>
+                  <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{improvement}</Text>
                 </View>
               </View>
-              <View style={styles.middleArea}>
-                <Text style={{ fontSize: width * 20 }}> {'→'} </Text>
-              </View>
-
-              <View style={styles.afterArea}>
-                <Image source={{ uri: `data:image/jpeg;base64,${imageData[0]}` }} style={styles.image} />
-                {pastTotal - troubleTotal > 0 ?
-                  (<View style={[styles.beforeAfterBlock,{ backgroundColor: 'white' }]}>
-                    <Text style={styleG.textStyle}>후</Text>
-                    <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{troubleTotal}개</Text>
-                  </View>
-                  )
-                  :
-                  (<View style={[styles.beforeAfterBlock,{ backgroundColor: 'white'}]}>
-                    <Text style={styleG.textStyle}>후</Text>
-                    <Text style={[styleG.textStyle, { fontSize: width * 17 }]}>{troubleTotal}개</Text>
-                  </View>
-                  )
-                }
-              </View>
-
+              <Subseperator type={"thin"} />
             </View>
-            <View style={styles.textArea}>
-              <Text style={[styleG.textStyle, { fontSize: width * 20 }]}>{improvement}</Text>
+            <View style={styles.ButtonArea}>
+              <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goDelete} title={'결과 삭제하기'} />
+              <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goDermatology} title={'주변 피부과'} />
             </View>
           </View>
-        </View>
-        <View style={styles.ButtonArea}>
-          <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goDelete} title={'결과 삭제하기'} />
-          <BasicButton category={'sideMargin'} color={colors.buttonSkyBlue} onPress={goDermatology} title={'주변 피부과'} />
-        </View>
+        </Shadow>
       </View>
     );
   }
@@ -184,55 +199,61 @@ export default function ImprovementAnalysisResultScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: width * 400,
+    height: height * 650,
     flexDirection: 'columm',
     justifyContent: 'center',
     paddingBottom: height * 20,
     backgroundColor: 'white',
+    marginTop: height * 20,
+    borderRadius: 10,
   },
   titleArea: {
     flexDirection: 'row',
+    width: width* 400,
     height: height * 70,
     alignItems: 'center'
   },
   contentsArea: {
     flexDirection: 'column',
-    height: height * 400,
+    justifyContent: 'center',
+    height: height * 370,
     // backgroundColor: 'red',
   },
   ButtonArea: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    height: height * 100,
-    marginRight: width * 20
+    height: height * 70,
+    marginRight: width * 20,
+    // backgroundColor: 'blue',
   },
 
   resultArea: {
-    // backgroundColor: 'blue',
-    height: height * 550
+    height: height * 500,
+    alignItems:'center'
+    // backgroundColor: 'yellow',
   },
   imgArea: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: width * 430,
-    // backgroundColor: 'yellow',
+    width: width * 400,
 
   },
   image: {
     // margin: width * 10,
-    width: width * 190,
-    height: height * 190,
-    borderTopStartRadius:10,
-    borderTopEndRadius:10,
+    width: width * 160,
+    height: height * 160,
+    borderRadius: 15,
+    // borderTopEndRadius: 10,
   },
   textArea: {
     // backgroundColor: colors.softGray,
-    backgroundColor:'white',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: width * 30,
-    width: width * 450,
+    width: width * 400,
     // borderWidth:1,
     // borderColor:colors.darkGray
   },
@@ -244,8 +265,8 @@ const styles = StyleSheet.create({
     marginTop: height * 30
   },
   middleArea: {
-    height: height * 300,
-    width: width *20,
+    height: height * 250,
+    width: width * 20,
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'green',
@@ -269,15 +290,16 @@ const styles = StyleSheet.create({
     height: height * 300,
     // backgroundColor:'green'
   },
-  beforeAfterBlock:{
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    width: width * 190, 
-    height: height * 60, 
-    borderBottomStartRadius: 15, 
-    borderBottomEndRadius: 15, 
-    borderWidth:1,
-    borderColor: colors.darkGray
+  beforeAfterBlock: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width * 100,
+    height: height * 50,
+    borderRadius: 15,
+    // borderBottomEndRadius: 15,
+    marginTop: height * 20,
+    borderWidth: 1,
+    // borderColor: 
 
   },
 
