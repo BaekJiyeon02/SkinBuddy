@@ -1,84 +1,60 @@
-import * as React from 'react';
-import { Text, TouchableOpacity, StyleSheet,FlatList,Image, View } from 'react-native';
-import { Entypo } from '@expo/vector-icons'
-import { colors, width, height, styleG } from '../assets/globalStyles'; //width,height 받아오기
-import { SliderBox } from "react-native-image-slider-box";
+import React, { useState, useEffect } from 'react';
+import { Text, TouchableOpacity, StyleSheet, FlatList, Image, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useRef } from 'react';
-import carouseItem from "../assets/carousel.json";
+import axios from 'axios'; // axios를 사용하여 API 호출
+import { colors, width, height, styleG } from '../assets/globalStyles';
 
-
-interface CarouselItems{
-    title: string;
-    url: string;
-    promo:string;
-
+interface Advertisement {
+  advertisementId: number;
+  photo: string; // base64로 인코딩된 사진 파일
 }
 
-export default function adBanner({ title, onPress, color, size }) {
+export default function AdBanner() {
+  const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
 
+  useEffect(() => {
+    // API 호출
+    axios.get('http://52.79.237.164:3000/manager/advertise/id-list')
+      .then(response => {
+        // API 응답에서 데이터 추출
+        const data = response.data.data;
+        setAdvertisements(data);
+      })
+      .catch(error => {
+        console.error('Error fetching advertisements:', error);
+      });
+  }, []);
 
-    let flatListRef=useRef<FlatList<CarouselItems> | null>();
-
-    const renderItems: React.FC<{item: CarouselItems}> =({item})=>{
-        return <TouchableOpacity onPress={()=>console.log('clicked')}>
-
-        <Image source={{uri:item.url}} style={styles.sliderImage}/>
-
-        {/*
-        footer 필요한 경우 사용
-         <View style={styles.footer}>
-            <Text style={styles.footerText}>{item.title}</Text>
-            <Text style={styles.footerText}>{item.promo}</Text>
-        </View> */}
-        </TouchableOpacity>
-    }
-
-
-        // 
-
+  const renderAdvertisement = ({ item }: { item: Advertisement }) => {
     return (
-        <View style={styles.container}>
-            <FlatList data={carouseItem}
-            renderItem={renderItems}
-            keyExtractor={(item,index)=>index.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            ref={(ref)=>{
+      <TouchableOpacity onPress={() => console.log('clicked')}>
+        <Image source={{ uri: `data:image/png;base64,${item.photo}` }} style={styles.sliderImage} />
+      </TouchableOpacity>
+    );
+  };
 
-            }}
-            
-            />
-
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={advertisements}
+        renderItem={renderAdvertisement}
+        keyExtractor={item => item.advertisementId.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        height:320 * Number(height),
-
-
-    },
-    sliderImage:{
-        width: 430 * Number(width),
-        height:250 * Number(height),
-        resizeMode:'cover',
-        marginVertical:50 * Number(height),
-
-    },
-    footerText:{
-        color:'white',
-
-    },
-    footer:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        height:50 * Number(height),
-        paddingHorizontal:40  * Number(width),
-        alignItems:'center',
-        backgroundColor:'#000',
-    }
-
-})
+  container: {
+    height: 320 * Number(height),
+  },
+  sliderImage: {
+    width: 430 * Number(width),
+    height: 250 * Number(height),
+    resizeMode: 'cover',
+    marginVertical: 50 * Number(height),
+  },
+});
